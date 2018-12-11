@@ -18,7 +18,11 @@ float voltsporUnidade = 0.004887586;// 5%1023
 float sensibilidade = 0.066;
  
 //Tensao da rede AC 110 Volts e na verdade (127 volts)
+<<<<<<< HEAD
 int tensao = 127;
+=======
+int tensao = 110;
+>>>>>>> master
  
 void setup() {
  
