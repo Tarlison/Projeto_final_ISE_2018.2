@@ -10,9 +10,10 @@ estadoC = com energia da rua e com carga parcial na bateria
 estadoD = com energia da rua e com carga total na bateria*/
 ACS712 sensor(ACS712_30A, A0);
 
+
 int tensao_bateria = 9; // tensao em Volts;
 int capacidade_bateria = 250; //capacidade em mAh;
-int carga_atual = capacidade_bateria; // carga em porcentagem;
+int carga_atual = 0; // carga em porcentagem;
 int recarregador_bateria = 20; // quanto a placa solar recarrega, em mA;
 int taxa_consumo = 50; //taxa em mA
 
@@ -27,23 +28,23 @@ float I = 0;
 void imprime_dados(){
   Serial.print("Corrente da rua: ");
   Serial.print(I, 4);
-  Serial.println("A");
+  Serial.println(" A");
 
   Serial.print("Carga Atual: ");
-  Serial.print( (carga_atual/capacidade_bateria)*100, 3);
-  Serial.println("%");
+  Serial.print( (((float)carga_atual/capacidade_bateria)*100), 3);
+  Serial.println(" %");
 }
 
 void tempo_recarga(){
   Serial.print("Tempo estimado de recarga: ");
-  Serial.print((capacidade_bateria - carga_atual)/recarregador_bateria, 3);
+  Serial.print((float)(capacidade_bateria - carga_atual)/recarregador_bateria, 3);
   Serial.println("horas");
   carga_atual = carga_atual + recarregador_bateria;
 }
 
 void tempo_uso(){
   Serial.print("Tempo estimado de uso: ");
-  Serial.print((capacidade_bateria - carga_atual)/taxa_consumo, 3);
+  Serial.print((float)(capacidade_bateria - carga_atual)/taxa_consumo, 3);
   Serial.println("horas");
   carga_atual = carga_atual - taxa_consumo;
 }
@@ -51,12 +52,16 @@ void tempo_uso(){
 void setup() {
   Serial.begin(9600);
   sensor.calibrate();
+  pinMode(9, OUTPUT);
+  
   //Define pinos para o rele como saida
   pinMode(porta_rele_energiaRua, OUTPUT); 
   pinMode(porta_rele_placaSolar, OUTPUT);
+  carga_atual = capacidade_bateria;
 }
 
 void loop() {
+  digitalWrite(9, HIGH);
   I = sensor.getCurrentAC(60);
   digitalWrite(porta_rele_energiaRua, LOW);  //Liga rele 1
   digitalWrite(porta_rele_placaSolar, LOW); //Desliga rele 2
