@@ -7,7 +7,7 @@ int porta_rele1 = 2;
 int porta_rele2 = 4;
 
 //Pinos do Relé
-int pinoSensor =A0;
+int pinoSensor = 0;
 int sensorValue_aux = 0;
 float valorSensor = 0;
 float valorCorrente = 0;
@@ -18,7 +18,11 @@ float voltsporUnidade = 0.004887586;// 5%1023
 float sensibilidade = 0.066;
  
 //Tensao da rede AC 110 Volts e na verdade (127 volts)
+<<<<<<< HEAD
 int tensao = 110;
+=======
+int tensao = 127;
+>>>>>>> master
  
 void setup() {
  
@@ -39,7 +43,6 @@ void loop() {
     sensorValue_aux = (analogRead(pinoSensor) -510);
     // somam os quadrados das leituras.
     valorSensor += pow(sensorValue_aux,2);
-    delay(1);
   }
  
   // finaliza o calculo da média quadratica e ajusta o valor lido para volts
