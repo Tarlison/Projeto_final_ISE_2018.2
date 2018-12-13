@@ -107,7 +107,7 @@ void loop() {
       break;
     case estadoD:
       Serial.println("    ED: Usando energia das baterias    ");//ativa energia da bateria
-      digitalWrite(porta_rele_energiaRua, LOW);
+      digitalWrite(porta_rele_energiaRua, HIGH);
       digitalWrite(porta_rele_placaSolar, HIGH);
       tempo_uso();
       if(I == 0){
